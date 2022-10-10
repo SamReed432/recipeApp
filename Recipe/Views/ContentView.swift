@@ -12,7 +12,7 @@ struct ContentView: View {
     @ObservedObject var recipeModel = RecipeModel()
     
     var body: some View {
-            
+        
             NavigationView {
                 List(recipeModel.recipes) { r in
                         
