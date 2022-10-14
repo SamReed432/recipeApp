@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ObservedObject var recipeModel = RecipeModel()
+    @EnvironmentObject var model:RecipeModel
     
     var body: some View {
         
             NavigationView {
-                List(recipeModel.recipes) { r in
+                List(model.recipes) { r in
                         
                         NavigationLink(
                             destination: {
@@ -46,6 +46,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        
+        ContentView().environmentObject(RecipeModel())
     }
 }

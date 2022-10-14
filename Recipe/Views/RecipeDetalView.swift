@@ -10,6 +10,8 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     
+    @EnvironmentObject var model:RecipeModel
+    
     var recipe:Recipe
     
     var body: some View {
@@ -50,7 +52,7 @@ struct RecipeDetailView: View {
                 Spacer()
             }
             
-            VStack{
+            VStack(alignment: .leading){
                 Spacer()
                 Text("Cooking Instructions").font(.title2).underline()
                 
@@ -59,13 +61,15 @@ struct RecipeDetailView: View {
                 
                 ForEach(0...recipe.directions.count-1, id:\.self) { index in
                    
-                    HStack{
-                        Text(String(index + 1) + ". ").foregroundColor(Color.purple).bold()
-                        Text(recipe.directions[index])
+                    Text(String(index + 1) + ". " + recipe.directions[index]).foregroundColor(Color(hue: 0.78, saturation: 0.932, brightness: 0.383)).bold()
                         
-                    }
-                    
-                }
+
+                } // End Directions Loop
+                
+                Spacer()
+                
+                Text("Ingredients:").font(.title2).underline()
+                
                 Spacer()
                 
                 ForEach(recipe.ingredients) { item in
@@ -73,8 +77,8 @@ struct RecipeDetailView: View {
                         .multilineTextAlignment(.leading)
                     
                 }
-                }
             }
+            }.padding(.horizontal, 20.0)
             
              
             
