@@ -67,19 +67,12 @@ struct RecipeDetailView: View {
                     
                 }
                 Spacer()
-                Text("Ingredients").font(.title2).underline()
                 
-                Spacer()
-                Spacer()
-                
-                ForEach(0...recipe.directions.count-1, id:\.self) { index in
-                   
-                    HStack{
-                        
-                        Text(recipe.ingredients[index])
-                        
-                    }
+                ForEach(recipe.ingredients) { item in
+                    Text("🎃 " + item.name)
+                        .multilineTextAlignment(.leading)
                     
+                }
                 }
             }
             
@@ -88,7 +81,6 @@ struct RecipeDetailView: View {
             
             
             }//End Scroll View
-        }
     }
 
 
