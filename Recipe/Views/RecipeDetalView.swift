@@ -14,9 +14,13 @@ struct RecipeDetailView: View {
     
     var recipe:Recipe
     
+    @State var numServs = 1
+    
     var body: some View {
+        
         ScrollView {
             Image(recipe.image).resizable()
+                .aspectRatio(contentMode: .fill)
                 .scaledToFit()
                 .frame(height: 200)
             
@@ -60,10 +64,10 @@ struct RecipeDetailView: View {
                 Spacer()
                 
                 ForEach(0...recipe.directions.count-1, id:\.self) { index in
-                   
+                    
                     Text(String(index + 1) + ". " + recipe.directions[index]).foregroundColor(Color(hue: 0.78, saturation: 0.932, brightness: 0.383)).bold()
-                        
-
+                    
+                    
                 } // End Directions Loop
                 
                 Spacer()
@@ -72,20 +76,38 @@ struct RecipeDetailView: View {
                 
                 Spacer()
                 
+                    Picker("Select Your Number of Servings:", selection: $numServs) {
+                        Text("1").tag(1)
+                        Text("2").tag(2)
+                        Text("4").tag(4)
+                        Text("6").tag(6)
+                        Text("8").tag(8)
+                    }.pickerStyle(.segmented)
+                
+                
                 ForEach(recipe.ingredients) { item in
-                    Text("🎃 " + item.name)
-                        .multilineTextAlignment(.leading)
-                    
-                }
+                    HStack{
+                        
+                        var tot = RecipeModel.getPortion(ingredient: item, recipeServings: recipe.servings, targetServings: numServs)
+                        
+                        Text("⇴" + tot)
+                            .multilineTextAlignment(.leading)
+                        
+                        
+                        if tot != "1" && item.unit != nil && item.num != nil {
+                            Text(item.unit! + "s")
+                        } else { Text(item.unit ?? "") }
+                        
+                        Text(item.name)
+                            .multilineTextAlignment(.leading)
+                        
+                    } // End HStack
+                } //End For Each
             }
-            }.padding(.horizontal, 20.0)
-            
-             
-            
-            
-            
-            }//End Scroll View
+        }.padding(.horizontal, 20.0)
+        //End Scroll View
     }
+}
 
 
 struct RecipeDetailView_Previews: PreviewProvider {

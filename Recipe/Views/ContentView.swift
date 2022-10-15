@@ -14,32 +14,51 @@ struct ContentView: View {
     var body: some View {
         
             NavigationView {
-                List(model.recipes) { r in
-                        
-                        NavigationLink(
-                            destination: {
-                                RecipeDetailView(recipe: r)
-                            }, label: {
-                                
-                                HStack{
-                                    Image(r.image)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 50, height: 50, alignment: .center)
-                                        .clipped()
-                                        
-                                    
-                                    Text(r.name)
-                                        .font(.headline)
-                                        .foregroundColor(Color.purple)
-                                }
-                                    
-                                Text(r.description)
-                                    
-                            }
-                            )
+                
+                VStack(alignment: .leading, spacing: 30){
+                    Text("All Recipes")
+                        .bold(true)
+                        .padding(.leading)
+                        .padding(.top, 40)
+                        .font(.largeTitle)
                     
-                } // End Nav view
+                    ScrollView{
+                        
+                        LazyVStack(alignment:.leading, spacing: 15){
+                            ForEach(model.recipes) { r in
+                                
+                                NavigationLink(
+                                    destination: {
+                                        RecipeDetailView(recipe: r)
+                                    }, label: {
+                                        
+                                        VStack(alignment:.leading){
+                                            HStack{
+                                                Image(r.image)
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 50, height: 50, alignment: .center)
+                                                    .clipped()
+                                                    .cornerRadius(10)
+                                                
+                                                
+                                                Text(r.name)
+                                                    .font(.headline)
+                                                    .foregroundColor(.black)
+                                            }
+                                            
+                                            
+                                        }
+                                    }
+                                )
+                                
+                            } // End Nav view
+                            .navigationBarHidden(true)
+                        }
+                        .padding(.leading, 25.0)
+
+                    }
+                }
             }
     }
 }
