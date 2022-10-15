@@ -11,6 +11,7 @@ struct Featured_View: View {
     
     @EnvironmentObject var model:RecipeModel
     @State var isDetailViewShowing = false
+    @State var tabIndex = 0;
     
     var body: some View {
         
@@ -19,12 +20,12 @@ struct Featured_View: View {
             Text("Featured Recipies")
                 .padding(.leading)
                 .padding(.top, 40)
-                .font(.largeTitle)
                 .bold()
+                .font(Font.custom("Snell Roundhand Black", size: 24))
             
             GeometryReader{ geo in
                 
-                TabView {
+                TabView (selection: $tabIndex){
                     
                     
                     ForEach (0..<model.recipes.count){ index in
@@ -50,6 +51,7 @@ struct Featured_View: View {
                                     }
                                 }
                             })
+                            .tag(index)
                             .sheet(isPresented: $isDetailViewShowing){
                                 RecipeDetailView(recipe:model.recipes[index])
                             }
@@ -67,10 +69,10 @@ struct Featured_View: View {
             }
             
             VStack(alignment: .leading){
-                Text("Prep Time")
-                Text("1 Hour")
-                Text("Highlights")
-                Text("Healthy Hearty")
+                Text("Preptime:")
+                Text(model.recipes[tabIndex].prepTime)
+                Text("Highlights:")
+                Text("Very Delicioso!")
             }
             .padding([.leading, .bottom])
         }// End VStack1
